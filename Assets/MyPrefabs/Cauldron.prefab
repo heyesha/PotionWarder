@@ -212,6 +212,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  Ingredients: []
 --- !u!54 &7562134571543528114
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -94,10 +94,6 @@ public class MouseRotation : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("RotateBottleTrigger") && tag != "BottleIngredient")
-        {
-            Instantiate(placeChecker, transform.position, transform.rotation, transform);
-        }
         if (other.CompareTag("RotateBottleTrigger") && tag == "BottleIngredient")
         {
             targetRotation = Quaternion.Euler(

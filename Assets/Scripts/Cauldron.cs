@@ -23,6 +23,13 @@ public class Cauldron : MonoBehaviour
     //private List<GameObject> ingredients;
     private bool isHeating = false;
 
+    public List<GameObject> Ingredients;
+
+    public void AddIngredient(GameObject ingredient)
+    {
+        Ingredients.Add(ingredient);
+    }
+
     private void OnMouseDrag()
     {
         isHeating = true;
@@ -52,19 +59,4 @@ public class Cauldron : MonoBehaviour
     {
         isHeating = false;
     }
-
-
-    /*private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Draggable"))
-        {
-            Rigidbody rb = other.GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.isKinematic = true;
-            }
-
-            other.transform.SetParent(transform);
-        }
-    }*/
 }
