@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3233810267703504951}
   - component: {fileID: 4990111092550924914}
   - component: {fileID: 4547473607242476346}
+  - component: {fileID: 7705224195133625865}
   m_Layer: 3
   m_Name: MushroomSmall
   m_TagString: MushroomSmall
@@ -151,5 +152,21 @@ MonoBehaviour:
   rotationSpeed: 8
   radius: 2
   placeChecker: {fileID: 3619311077725510181, guid: af0724228456b2347840bd1acac275ff, type: 3}
+  waterAddingSpeed: 1
   originalPosition: {x: 0, y: 0, z: 0}
   originalRotation: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7705224195133625865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9081237037490899431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 945012aba16cf3540b3bd9982c8304a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: "\u041C\u0443\u0445\u043E\u043C\u043E\u0440"
+  Amount: 1
+  Cauldron: {fileID: 0}

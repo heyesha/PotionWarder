@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
     {
         if (Cauldron != null)
         {
-            
+            Cauldron.GetComponent<Cauldron>().CheckIngredients(CurrentOrder);
         }
     }
 }

@@ -22,6 +22,9 @@ public class MouseRotation : MonoBehaviour
     private bool isNotOriginalPosition;
     private bool isInTrigger;
 
+    [SerializeField]
+    private int waterAddingSpeed = 1;
+
     //public GameObject selectedObject;
     public Vector3 originalPosition;
     public Quaternion originalRotation;
@@ -118,7 +121,6 @@ public class MouseRotation : MonoBehaviour
                 targetRotation = originalRotation;
             }
         }
-
     }
 
     private void OnTriggerExit(Collider other)

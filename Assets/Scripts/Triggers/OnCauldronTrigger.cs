@@ -11,6 +11,8 @@ public class OnCauldronTrigger : MonoBehaviour
         if (other.gameObject.layer == 3)
         {
             OnAddIngredient?.Invoke(other.gameObject);
+            other.enabled = false;
+            other.gameObject.isStatic = true;
         }
     }
 }

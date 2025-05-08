@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   potionName: "\u0417\u0435\u043B\u044C\u0435 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u0438"
   description: 
+  waterAmount: 0
+  temperature: 0
   recipe:
   - name: "\u041C\u0443\u0445\u043E\u043C\u043E\u0440"
-    amount: 2
+    amount: 1
   - name: "\u0417\u0435\u043B\u0435\u043D\u044C"
     amount: 1
