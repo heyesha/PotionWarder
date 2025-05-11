@@ -5,21 +5,25 @@ using UnityEngine.Events;
 
 public class Cauldron : MonoBehaviour
 {
-    [SerializeField]
-    private float temperature = 20f;
-    [SerializeField]
-    private float heatingSpeed = 8f;
-    [SerializeField]
-    private float maxTemperature = 120f;
-    [SerializeField]
-    private float minTemperature = 20f;
-    [SerializeField]
-    private float coolingSpeed = 2f;
+    [SerializeField] private float temperature = 20f;
+
+    [SerializeField] private float heatingSpeed = 8f;
+
+    [SerializeField] private float maxTemperature = 120f;
+
+    [SerializeField] private float minTemperature = 20f;
+
+    [SerializeField] private float coolingSpeed = 2f;
+
+    public float maxWaterAmount = 100;
 
     public List<GameObject> Ingredients;
-    public float waterAmount;
-    public int TotalPoints;
-    public int PerfectPoints;
+
+    public float WaterAmount = 19;
+
+    public UnityEvent<float> OnWaterAmountChanged;
+
+    public UnityEvent<string> OnWaterAmountChangedString;
 
     [SerializeField]
     private UnityEvent<string> OnTemperatureChanged;
@@ -28,21 +32,95 @@ public class Cauldron : MonoBehaviour
 
     private bool isHeating = false;
 
+    public PotionData currentRecipe;
+    public int currentStepIndex = 0;
+    public List<RecipeStep> completedSteps = new List<RecipeStep>();
+    public int wrongStepCount;
+    public int correctStepCount;
+    public bool isCurrentStepCorrect = false;
 
-    [SerializeField]
-    private int pointsForIngredient = 30;
-
-    [SerializeField]
-    private int wrongIngredient = 30;
-
-    public void AddIngredient(GameObject ingredient)
+    public bool CheckPlayerAction(string addedIngredientName = null, int addedWater = 0)
     {
-        Ingredients.Add(ingredient);
+        if (currentRecipe == null)
+        {
+            Debug.Log("Нет заказа!");
+            return false;
+        }
+
+        if (currentStepIndex >= currentRecipe.steps.Count)
+        {
+            Debug.Log("Рецепт уже завершён!");
+            return false;
+        }
+
+        RecipeStep currentStep = currentRecipe.steps[currentStepIndex];
+
+        bool isStepCorrect = false;
+
+        if (!string.IsNullOrEmpty(currentStep.requiredIngredient))
+        {
+            if (addedIngredientName == currentStep.requiredIngredient)
+            {
+                isStepCorrect = true;
+            }
+        }
+
+        else if (currentStep.requiredWaterAmount > 0)
+        {
+            if (addedWater == currentStep.requiredWaterAmount)
+            {
+                isStepCorrect = true;
+            }
+        }
+
+        if (isStepCorrect)
+        {
+            isCurrentStepCorrect = true;
+            correctStepCount++;
+            completedSteps.Add(currentStep);
+            currentStepIndex++;
+            Debug.Log($"Шаг {currentStepIndex} выполнен: {currentStep.description}");
+
+            if (currentStepIndex == currentRecipe.steps.Count)
+            {
+                Debug.Log("Рецепт выполнен идеально!");
+            }
+            return true;
+        }
+        else
+        {
+            wrongStepCount++;
+            Debug.Log("Ошибка! Это не тот шаг.");
+            currentStepIndex++;
+            // TO DO: убрать инкремент шага, чтобы просто считать количество ошибок на шаге, если их больше 3,
+            // то шаг переходит на следующий и он становится красным
+            return false;
+        }
     }
 
-    public void AddWater(int amount)
+    public void SetRecipe(PotionData recipe)
     {
-        waterAmount += amount;
+        currentRecipe = recipe;
+    }
+
+    public void ResetRecipe()
+    {
+        currentStepIndex = 0;
+        completedSteps.Clear();
+    }
+
+    public void AddWater(float waterAddingSpeed)
+    {
+        if (WaterAmount < maxWaterAmount)
+        {
+            WaterAmount += waterAddingSpeed * Time.deltaTime;
+            OnWaterAmountChanged?.Invoke((float)Math.Floor(WaterAmount));
+        }
+        else
+        {
+            Debug.Log("В котле максимальное количество воды!");
+            // TODO: спавн уведомления на экране UI
+        }
     }
 
     private void OnMouseDrag()
@@ -78,7 +156,7 @@ public class Cauldron : MonoBehaviour
     [SerializeField]
     public UnityEvent<string> OnCheckedIngredients;
 
-    public void CheckIngredients(PotionData potion)
+/*    public void CheckIngredients(PotionData potion)
     {
         var points = pointsForIngredient * Ingredients.Count;
         var perfectPoints = points;
@@ -130,4 +208,4 @@ public class Cauldron : MonoBehaviour
         TotalPoints = points;
         PerfectPoints = perfectPoints;
     }
-}
+*/}

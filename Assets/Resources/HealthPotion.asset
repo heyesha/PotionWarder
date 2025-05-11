@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: HealthPotion
   m_EditorClassIdentifier: 
   potionName: "\u0417\u0435\u043B\u044C\u0435 \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u044F"
-  description: 
-  waterAmount: 20
-  temperature: 90
-  recipe:
-  - name: "\u0417\u0435\u043B\u0435\u043D\u044C"
-    amount: 1
-  - name: "\u041C\u0443\u0445\u043E\u043C\u043E\u0440"
-    amount: 1
+  steps:
+  - description: "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0437\u0435\u043B\u0435\u043D\u044C"
+    requiredIngredient: "\u0417\u0435\u043B\u0435\u043D\u044C"
+    requiredWaterAmount: 0
+  - description: "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043C\u0443\u0445\u043E\u043C\u043E\u0440"
+    requiredIngredient: "\u041C\u0443\u0445\u043E\u043C\u043E\u0440"
+    requiredWaterAmount: 0

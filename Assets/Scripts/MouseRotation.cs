@@ -119,7 +119,7 @@ public class MouseRotation : MonoBehaviour
             if (Quaternion.Angle(transform.rotation, targetRotation) < 0.1f)
             {
                 targetRotation = originalRotation;
-            }
+            };
         }
     }
 

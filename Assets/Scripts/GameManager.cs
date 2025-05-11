@@ -32,13 +32,16 @@ public class GameManager : MonoBehaviour
 
         Instance.CurrentOrder = randomPotion;
         OnCreateOrderText?.Invoke($"Заказ:\n{randomPotion.potionName}");
+        if (Cauldron != null)
+        {
+            var cauldron = Cauldron.GetComponent<Cauldron>();
+            cauldron.ResetRecipe();
+            cauldron.SetRecipe(CurrentOrder);
+        }
     }
 
     public void CheckPotion()
     {
-        if (Cauldron != null)
-        {
-            Cauldron.GetComponent<Cauldron>().CheckIngredients(CurrentOrder);
-        }
+        
     }
 }
