@@ -23,4 +23,5 @@ public class RecipeStep
     public int requiredWaterAmount;
     public int requiredTemperature;
     public int allowableDifference;
+    public bool isNeedToStir;
 }

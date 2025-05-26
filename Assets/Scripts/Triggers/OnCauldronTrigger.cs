@@ -4,23 +4,16 @@ using UnityEngine.Events;
 
 public class OnCauldronTrigger : MonoBehaviour
 {
-    [SerializeField]
-    public UnityEvent<Ingredient> OnAddIngredient;
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == 3)
         {
-
+            other.GetComponent<MeshCollider>().enabled = false;
             Ingredient ingredient = other.gameObject.GetComponent<Ingredient>();
             if (ingredient != null)
             {
                 bool isStepCorrect = ingredient.Cauldron.CheckPlayerAction(ingredient.Name);
-
-                if (isStepCorrect)
-                {
-                    Destroy(other.gameObject);
-                }
+                Destroy(other.gameObject, 3f);
             }
         }
     }

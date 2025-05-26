@@ -12,6 +12,7 @@ TagManager:
   - RotateBottleTrigger
   - BottleIngredient
   - PlaceChecker
+  - Water
   layers:
   - Default
   - TransparentFX

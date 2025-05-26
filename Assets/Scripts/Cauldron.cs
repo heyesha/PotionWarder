@@ -1,3 +1,4 @@
+using Palmmedia.ReportGenerator.Core.Parser.Analysis;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,7 +41,7 @@ public class Cauldron : MonoBehaviour
     public bool isCurrentStepCorrect = false;
 
     public bool CheckPlayerAction(string addedIngredientName = null, 
-        int addedWater = 0)
+        int addedWater = 0, bool isStirred = false)
     {
         if (currentRecipe == null)
         {
@@ -85,6 +86,13 @@ public class Cauldron : MonoBehaviour
             {
                 isStepCorrect = true;
             }
+        }
+
+        else if (currentStep.isNeedToStir && isStirred)
+        {
+            // ÀŒ√» ¿ —œ¿¬Õ¿ —À¿…ƒ≈–¿
+
+            isStepCorrect = true;
         }
 
         if (isStepCorrect)
