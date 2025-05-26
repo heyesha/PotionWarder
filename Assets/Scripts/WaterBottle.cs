@@ -1,7 +1,5 @@
 using System;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class WaterBottle : MonoBehaviour
 {
@@ -37,9 +35,6 @@ public class WaterBottle : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     { 
-        //cauldronScript.WaterAmount += waterAddingSpeed * Time.deltaTime;
-        //cauldronScript.AddWater(waterAddingSpeed);
-
         if (Cauldron != null)
         {
             if (cauldronScript.WaterAmount < cauldronScript.maxWaterAmount)

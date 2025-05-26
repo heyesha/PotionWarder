@@ -39,7 +39,8 @@ public class Cauldron : MonoBehaviour
     public int correctStepCount;
     public bool isCurrentStepCorrect = false;
 
-    public bool CheckPlayerAction(string addedIngredientName = null, int addedWater = 0)
+    public bool CheckPlayerAction(string addedIngredientName = null, 
+        int addedWater = 0)
     {
         if (currentRecipe == null)
         {
@@ -59,9 +60,22 @@ public class Cauldron : MonoBehaviour
 
         if (!string.IsNullOrEmpty(currentStep.requiredIngredient))
         {
-            if (addedIngredientName == currentStep.requiredIngredient)
+            if (currentStep.requiredTemperature != 0)
             {
-                isStepCorrect = true;
+                var diff = Math.Abs(currentStep.requiredTemperature - temperature);
+                if (addedIngredientName == currentStep.requiredIngredient 
+                    && diff <= currentStep.allowableDifference)
+                {
+                    isStepCorrect = true;
+                }
+            }
+
+            else
+            {
+                if (addedIngredientName == currentStep.requiredIngredient)
+                {
+                    isStepCorrect = true;
+                }
             }
         }
 

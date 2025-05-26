@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Text;
 using TMPro;
 
@@ -33,13 +32,10 @@ public class RecipeUI : MonoBehaviour
                 {
                     sb.AppendLine($"<color=green>✓ {stepDesc}</color>");
                 }
-
-
                 else if (i == cauldron.currentStepIndex)
                 {
                     sb.AppendLine($"<color=yellow>→ {stepDesc}</color>");
                 }
-
                 else if (!cauldron.isCurrentStepCorrect)
                 {
                     sb.AppendLine($"<color=red>→ {stepDesc}</color>");
@@ -49,7 +45,6 @@ public class RecipeUI : MonoBehaviour
                     sb.AppendLine($"- {stepDesc}");
                 }
             }
-
             stepsText.text = sb.ToString();
         }
     }

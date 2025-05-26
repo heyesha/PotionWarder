@@ -25,7 +25,6 @@ public class MouseRotation : MonoBehaviour
     [SerializeField]
     private int waterAddingSpeed = 1;
 
-    //public GameObject selectedObject;
     public Vector3 originalPosition;
     public Quaternion originalRotation;
 

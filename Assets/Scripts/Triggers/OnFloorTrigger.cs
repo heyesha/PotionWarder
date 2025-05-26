@@ -19,10 +19,6 @@ public class OnFloorTrigger : MonoBehaviour
             other.transform.position = originalPosition;
 
             other.gameObject.GetComponent<Rigidbody>().freezeRotation = true;
-
-            //Debug.Log("До корутины");
-            //StartCoroutine(MoveToOriginalPosition(other));
-            //Debug.Log("После корутины");
         }
     }
 

@@ -21,4 +21,6 @@ public class RecipeStep
     public string description;
     public string requiredIngredient;
     public int requiredWaterAmount;
+    public int requiredTemperature;
+    public int allowableDifference;
 }
