@@ -26,3 +26,4 @@ MonoBehaviour:
     requiredTemperature: 0
     allowableDifference: 0
     isNeedToStir: 1
+  basicPrice: 200

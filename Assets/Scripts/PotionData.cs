@@ -6,6 +6,7 @@ public class PotionData : ScriptableObject
 {
     public string potionName;
     public List<RecipeStep> steps;
+    public int basicPrice;
 }
 
 [System.Serializable]

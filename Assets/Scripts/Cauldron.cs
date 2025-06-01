@@ -32,6 +32,7 @@ public class Cauldron : MonoBehaviour
 
     public UnityEvent OnCheckAction;
     public UnityEvent OnCreateOrder;
+    public UnityEvent<string> OnPotionReady;
 
     private bool isHeating = false;
 
@@ -128,6 +129,41 @@ public class Cauldron : MonoBehaviour
         }
     }
 
+    public void CheckPotion()
+    {
+        if (currentRecipe == null)
+        {
+            return;
+        }
+
+        if (currentStepIndex == currentRecipe.steps.Count)
+        {
+            CalculatePotionPrice(currentRecipe.basicPrice);
+        }
+        else
+        {
+            Debug.Log("«≈À‹≈ Õ≈ «¿ ŒÕ◊≈ÕŒ!");
+        }
+
+        ResetRecipe();
+    }
+
+    public void CalculatePotionPrice(int defaultPrice)
+    {
+        var potionChecker = GetComponent<PotionChecker>();
+        var multiplyier = potionChecker.CalculateQualityMultiplier(wrongStepCount, correctStepCount);
+
+        var price = (int)(defaultPrice * multiplyier);
+        UpdateMoney(price);
+
+        OnPotionReady?.Invoke(price.ToString());
+    }
+
+    private void UpdateMoney(int amount)
+    {
+        PlayerMoney.Instance.AddMoney(amount);
+    }
+
     private void AddCheckedStep(int stepIndex, bool isCorrect)
     {
         checkedSteps.Add(stepIndex, isCorrect);
@@ -142,6 +178,8 @@ public class Cauldron : MonoBehaviour
 
     public void ResetRecipe()
     {
+        wrongStepCount = 0;
+        correctStepCount = 0;
         currentStepIndex = 0;
         completedSteps.Clear();
         checkedSteps.Clear();

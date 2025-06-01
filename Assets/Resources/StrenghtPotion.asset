@@ -21,3 +21,5 @@ MonoBehaviour:
     requiredWaterAmount: 0
     requiredTemperature: 90
     allowableDifference: 10
+    isNeedToStir: 0
+  basicPrice: 1000
