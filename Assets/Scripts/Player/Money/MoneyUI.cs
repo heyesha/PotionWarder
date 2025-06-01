@@ -8,7 +8,7 @@ public class MoneyUI : MonoBehaviour
     private void Start()
     {
         PlayerMoney.Instance.OnMoneyChanged.AddListener(UpdateMoneyUI);
-
+        UpdateMoneyUI(PlayerMoney.Instance.CurrentMoney);
     }
 
     private void UpdateMoneyUI(int money)

@@ -7,7 +7,7 @@ namespace MagicPigGames
     {
         [Header("Test Zone")]
         [Tooltip("Toggle on to test the progress bar in the editor, during play mode.")]
-        public bool enableTesting = false;
+        public bool enableTesting = true;
         [Range(0f, 1f)]
         [Tooltip("Note, if testing in the editor and invertProgress is true, the progress value will be inverted.")]
         public float progress = 0f; // This is the Inspector test value for progress!
@@ -24,7 +24,7 @@ namespace MagicPigGames
             _progressBar.SetProgress(progress);
         }
 
-        private void OnValidate()
+        private void Start()
         {
             if (_progressBar == null)
                 _progressBar = GetComponent<ProgressBar>();

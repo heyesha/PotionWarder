@@ -5,19 +5,32 @@ public class PlayerMoney : MonoBehaviour
 {
     public static PlayerMoney Instance;
 
-    [SerializeField] private int _currentMoney = 0;
+    [SerializeField] private int _currentMoney;
+
+    public int CurrentMoney
+    {
+        get {  return _currentMoney; }
+    }
 
     public UnityEvent<int> OnMoneyChanged;
+
+    private void Start()
+    {
+        LoadMoney();
+        OnMoneyChanged?.Invoke(_currentMoney);
+    }
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
+            LoadMoney();
+            OnMoneyChanged?.Invoke(_currentMoney);
         }
         else
         {
-            Destroy(Instance);
+            Destroy(gameObject);
         }
     }
 
@@ -52,5 +65,15 @@ public class PlayerMoney : MonoBehaviour
     {
         _currentMoney = PlayerPrefs.GetInt("PlayerMoney", 0);
         OnMoneyChanged?.Invoke(_currentMoney);
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveMoney();
+    }
+
+    private void OnDestroy()
+    {
+        SaveMoney();
     }
 }

@@ -38,10 +38,9 @@ public class GameManager : MonoBehaviour
             cauldron.ResetRecipe();
             cauldron.SetRecipe(CurrentOrder);
         }
-    }
-
-    public void CheckPotion()
-    {
-        
+        else
+        {
+            return;
+        }
     }
 }

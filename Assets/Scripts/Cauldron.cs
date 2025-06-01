@@ -5,15 +5,15 @@ using UnityEngine.Events;
 
 public class Cauldron : MonoBehaviour
 {
+    [Header("Настройки температуры")]
     [SerializeField] private float temperature = 20f;
-
     [SerializeField] private float heatingSpeed = 8f;
-
     [SerializeField] private float maxTemperature = 120f;
-
     [SerializeField] private float minTemperature = 20f;
-
     [SerializeField] private float coolingSpeed = 2f;
+
+    [SerializeField] private GameObject potionStepsBackUI;
+    [SerializeField] private GameObject potionSteps;
 
     public float maxWaterAmount = 100;
 
@@ -139,13 +139,12 @@ public class Cauldron : MonoBehaviour
         if (currentStepIndex == currentRecipe.steps.Count)
         {
             CalculatePotionPrice(currentRecipe.basicPrice);
+            ResetRecipe();
         }
         else
         {
             Debug.Log("ЗЕЛЬЕ НЕ ЗАКОНЧЕНО!");
         }
-
-        ResetRecipe();
     }
 
     public void CalculatePotionPrice(int defaultPrice)
@@ -172,6 +171,8 @@ public class Cauldron : MonoBehaviour
 
     public void SetRecipe(PotionData recipe)
     {
+        potionStepsBackUI.SetActive(true);
+        potionSteps.SetActive(true);
         currentRecipe = recipe;
         OnCreateOrder?.Invoke();
     }
@@ -183,6 +184,8 @@ public class Cauldron : MonoBehaviour
         currentStepIndex = 0;
         completedSteps.Clear();
         checkedSteps.Clear();
+        potionStepsBackUI.SetActive(false);
+        potionSteps.SetActive(false);
     }
 
     public void AddWater(float waterAddingSpeed)
