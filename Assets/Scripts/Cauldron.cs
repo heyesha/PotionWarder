@@ -1,4 +1,3 @@
-using Palmmedia.ReportGenerator.Core.Parser.Analysis;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,6 +30,9 @@ public class Cauldron : MonoBehaviour
     [SerializeField]
     private UnityEvent<float> OnTemperatureChangedPercent;
 
+    public UnityEvent OnCheckAction;
+    public UnityEvent OnCreateOrder;
+
     private bool isHeating = false;
 
     public PotionData currentRecipe;
@@ -39,6 +41,12 @@ public class Cauldron : MonoBehaviour
     public int wrongStepCount;
     public int correctStepCount;
     public bool isCurrentStepCorrect = false;
+    public Dictionary<int, bool> checkedSteps = new Dictionary<int, bool>();
+
+    private void Start()
+    {
+        OnWaterAmountChangedString?.Invoke($"{WaterAmount}л");
+    }
 
     public bool CheckPlayerAction(string addedIngredientName = null, 
         int addedWater = 0, bool isStirred = false)
@@ -90,13 +98,12 @@ public class Cauldron : MonoBehaviour
 
         else if (currentStep.isNeedToStir && isStirred)
         {
-            // ЛОГИКА СПАВНА СЛАЙДЕРА
-
             isStepCorrect = true;
         }
 
         if (isStepCorrect)
         {
+            AddCheckedStep(currentStepIndex, isStepCorrect);
             isCurrentStepCorrect = true;
             correctStepCount++;
             completedSteps.Add(currentStep);
@@ -111,6 +118,7 @@ public class Cauldron : MonoBehaviour
         }
         else
         {
+            AddCheckedStep(currentStepIndex, isStepCorrect);
             wrongStepCount++;
             Debug.Log("Ошибка! Это не тот шаг.");
             currentStepIndex++;
@@ -120,15 +128,23 @@ public class Cauldron : MonoBehaviour
         }
     }
 
+    private void AddCheckedStep(int stepIndex, bool isCorrect)
+    {
+        checkedSteps.Add(stepIndex, isCorrect);
+        OnCheckAction?.Invoke();
+    }
+
     public void SetRecipe(PotionData recipe)
     {
         currentRecipe = recipe;
+        OnCreateOrder?.Invoke();
     }
 
     public void ResetRecipe()
     {
         currentStepIndex = 0;
         completedSteps.Clear();
+        checkedSteps.Clear();
     }
 
     public void AddWater(float waterAddingSpeed)
@@ -174,60 +190,4 @@ public class Cauldron : MonoBehaviour
     {
         isHeating = false;
     }
-
-    [SerializeField]
-    public UnityEvent<string> OnCheckedIngredients;
-
-/*    public void CheckIngredients(PotionData potion)
-    {
-        var points = pointsForIngredient * Ingredients.Count;
-        var perfectPoints = points;
-
-        if (Ingredients.Count == 0)
-        {
-            OnCheckedIngredients?.Invoke("Нужно добавить ингредиенты");
-            return;
-        }
-
-        // Проверка правильности ингредиентов
-        if (Ingredients.Count == potion.recipe.Length)
-        {
-            for (int i = 0; i < Ingredients.Count; i++)
-            {
-                if (Ingredients[i].GetComponent<Ingredient>().Name != potion.recipe[i].name)
-                {
-                    points -= wrongIngredient;
-                }
-            }
-        }
-        else
-        {
-            var diff = Math.Abs(potion.recipe.Length - Ingredients.Count);
-            points -= diff * pointsForIngredient;
-            Debug.Log("Неправильное количество ингредиентов");
-            return;
-        }
-
-        // TO DO Проверка на количество ВОДЫ и ТЕМПЕРАТУРЫ
-
-        if (points <= 0)
-        {
-            Debug.Log("Зелье приготовлено неправильно. Клиент ушёл, не заплатив");
-        }
-        else if (points / perfectPoints < 0.3)
-        {
-            Debug.Log("Зелье приготовлено плохо. Клиент заплатил треть стоимости");
-        }
-        else if (points / perfectPoints < 0.6)
-        {
-            Debug.Log("Зелье приготовлено хорошо. Клиент заплатил половину стоимости");
-        }
-        else if (points / perfectPoints == 1.0)
-        {
-            Debug.Log("Зелье приготовлено идеально. Клиент доволен");
-        }
-
-        TotalPoints = points;
-        PerfectPoints = perfectPoints;
-    }
-*/}
+}

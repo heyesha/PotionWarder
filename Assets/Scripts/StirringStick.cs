@@ -1,3 +1,4 @@
+using MagicPigGames;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,10 +7,12 @@ public class StirringStick : MonoBehaviour
     private Cauldron _cauldron;
 
     [Header("Настройки помешивания")]
-    [SerializeField] private Slider _stirSlider;
     [SerializeField] private float _stirSpeed = 2.2f; 
     [SerializeField] private float _decaySpeed = 0.3f; 
     [SerializeField] private float _requiredStirLevel = 0.8f;
+    [SerializeField] private GameObject _progressBarPrefab;
+
+    private ProgressBarInspectorTest _progressBar;
 
     [Header("Аудио")]
     [SerializeField] private AudioClip _stirringSound;
@@ -30,14 +33,16 @@ public class StirringStick : MonoBehaviour
         _audioSource.clip = _stirringSound;
         _audioSource.loop = true;
         _audioSource.playOnAwake = false;
+        _progressBar = _progressBarPrefab.GetComponent<ProgressBarInspectorTest>();
+        _progressBar.progress = 0.01f;
     }
 
     private void Update()
     {
         if (!_isDragging)
         {
-            _stirSlider.value -= _decaySpeed * Time.deltaTime;
-            _stirSlider.value = Mathf.Max(_stirSlider.value, 0);
+            _progressBar.progress -= _decaySpeed * Time.deltaTime;
+            _progressBar.progress = Mathf.Max(_progressBar.progress, 0);
         }
     }
 
@@ -60,7 +65,8 @@ public class StirringStick : MonoBehaviour
 
         if (distanceMoved > _minMovementThreshold)
         {
-            _stirSlider.value += _stirSpeed * Time.deltaTime;
+            _progressBar.progress += _stirSpeed * Time.deltaTime;
+            _progressBar.progress = Mathf.Min(_progressBar.progress, 1);
             _lastPosition = transform.position;            
         }
     }
@@ -71,7 +77,7 @@ public class StirringStick : MonoBehaviour
 
         _audioSource.Stop();
 
-        if (_stirSlider.value >= _requiredStirLevel)
+        if (_progressBar.progress >= _requiredStirLevel)
         {
             _cauldron.CheckPlayerAction(null, 0, true);
         }

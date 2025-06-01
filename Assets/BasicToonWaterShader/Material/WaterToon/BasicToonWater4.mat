@@ -137,11 +137,11 @@ Material:
     - _WaveDistance: 1
     - _WaveDistortionAmount: 0.1
     - _WaveDistortionSpeed: 0.1
-    - _WaveFrequency: 1
+    - _WaveFrequency: 2.55
     - _WaveLength: 1.54
     - _WaveNormalStrength: 0.376
-    - _WaveSpeed: 0.04
-    - _WaveStrength: 0.591
+    - _WaveSpeed: 2.72
+    - _WaveStrength: 0.1
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0, g: 0.6698113, b: 0.04996887, a: 0.87058824}
