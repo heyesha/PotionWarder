@@ -1,11 +1,11 @@
+using TMPro;
 using UnityEngine;
 
 public class IngredientSpawner : MonoBehaviour
 {
     private float height;
     private Vector3 originalPosition;
-    [SerializeField]
-    private GameObject ingredientPrefab;
+    [SerializeField] private GameObject ingredientPrefab;
     private Outline outline;
 
     private void Start()
@@ -26,12 +26,10 @@ public class IngredientSpawner : MonoBehaviour
 
     private void OnMouseOver()
     {
-        // ÂÊËŞ×ÅÍÈÅ ÏÎÄÑÂÅÒÊÈ
         outline.enabled = true;
     }
     private void OnMouseExit()
     {
-        // ÂÛÊËŞ×ÅÍÈÅ ÏÎÄÑÂÅÒÊÈ
         outline.enabled = false;
     }
 }

@@ -13,6 +13,8 @@ TagManager:
   - BottleIngredient
   - PlaceChecker
   - Water
+  - YellowMush
+  - Apple
   layers:
   - Default
   - TransparentFX
@@ -49,4 +51,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: WaterBottle
+    uniqueID: 230802307
     locked: 0

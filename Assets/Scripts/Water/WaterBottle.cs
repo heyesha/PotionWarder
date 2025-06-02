@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,18 +8,17 @@ public class WaterBottle : MonoBehaviour
 {
     [SerializeField]
     private float waterAddingSpeed = 1.5f;
+    [SerializeField] public ParticleSystem pourParticles;
 
     private int startWaterAmount;
     private int endWaterAmount;
 
     private float addedWaterAmount = 0f;
 
-    [SerializeField]
     private GameObject Cauldron;
 
-    [SerializeField] private Cauldron cauldronScript;
+    private Cauldron cauldronScript;
 
-    [SerializeField]
     private UnityEvent<string> OnAddWater;
     [SerializeField] private GameObject notificationPrefab;
 
@@ -45,6 +45,7 @@ public class WaterBottle : MonoBehaviour
         startWaterAmount = (int)Math.Floor(cauldronScript.WaterAmount);
         addedWaterAmount = 0f;
         notificationText.enabled = true;
+        pourParticles.Play();
     }
 
     private void OnTriggerStay(Collider other)
@@ -72,16 +73,32 @@ public class WaterBottle : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        pourParticles.Stop();
         endWaterAmount = (int)Math.Floor(cauldronScript.WaterAmount);
         cauldronScript.WaterAmount = (int)cauldronScript.WaterAmount;
         var waterAdded = endWaterAmount - startWaterAmount;
         addedWaterAmount = 0f;
 
-        cauldronScript.CheckPlayerAction(null, waterAdded);
+        if (waterAdded < 1)
+        {
+            if (notificationText != null)
+            {
+                notificationText.enabled = false;
+            }
+            return;
+        }
+
+        StartCoroutine(DoAfterDelay(0.2f, waterAdded));
 
         if (notificationText != null)
         {
             notificationText.enabled = false;
         }
+    }
+
+    IEnumerator DoAfterDelay(float delay, int addedWater)
+    {
+        yield return new WaitForSeconds(delay);
+        cauldronScript.CheckPlayerAction(null, addedWater);
     }
 }

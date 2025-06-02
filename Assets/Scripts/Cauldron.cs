@@ -11,31 +11,33 @@ public class Cauldron : MonoBehaviour
     [SerializeField] private float maxTemperature = 120f;
     [SerializeField] private float minTemperature = 20f;
     [SerializeField] private float coolingSpeed = 2f;
+    private bool isHeating = false;
 
+    [Header("Элемент UI")]
     [SerializeField] private GameObject potionStepsBackUI;
     [SerializeField] private GameObject potionSteps;
+    [SerializeField] private GameObject potionOrder;
 
-    public float maxWaterAmount = 100;
 
     public List<GameObject> Ingredients;
 
+    [Header("Настройки воды")]
     public float WaterAmount = 19;
+    public float maxWaterAmount = 100;
 
+    [Header("События")]
     public UnityEvent<float> OnWaterAmountChanged;
-
     public UnityEvent<string> OnWaterAmountChangedString;
-
     [SerializeField]
     private UnityEvent<string> OnTemperatureChanged;
     [SerializeField]
     private UnityEvent<float> OnTemperatureChangedPercent;
-
     public UnityEvent OnCheckAction;
     public UnityEvent OnCreateOrder;
     public UnityEvent<string> OnPotionReady;
 
-    private bool isHeating = false;
 
+    [Header("Управление рецептом")]
     public PotionData currentRecipe;
     public int currentStepIndex = 0;
     public List<RecipeStep> completedSteps = new List<RecipeStep>();
@@ -155,6 +157,9 @@ public class Cauldron : MonoBehaviour
         var price = (int)(defaultPrice * multiplyier);
         UpdateMoney(price);
 
+        var rewardPanel = GetComponent<PotionRewardUI>();
+        rewardPanel.ShowReward(multiplyier, price);
+
         OnPotionReady?.Invoke(price.ToString());
     }
 
@@ -171,6 +176,7 @@ public class Cauldron : MonoBehaviour
 
     public void SetRecipe(PotionData recipe)
     {
+        potionOrder.SetActive(true);
         potionStepsBackUI.SetActive(true);
         potionSteps.SetActive(true);
         currentRecipe = recipe;
@@ -186,6 +192,7 @@ public class Cauldron : MonoBehaviour
         checkedSteps.Clear();
         potionStepsBackUI.SetActive(false);
         potionSteps.SetActive(false);
+        potionOrder.SetActive(false);
     }
 
     public void AddWater(float waterAddingSpeed)

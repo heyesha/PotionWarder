@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class OnFloorTrigger : MonoBehaviour
@@ -19,19 +18,6 @@ public class OnFloorTrigger : MonoBehaviour
             other.transform.position = originalPosition;
 
             other.gameObject.GetComponent<Rigidbody>().freezeRotation = true;
-        }
-    }
-
-    private IEnumerator MoveToOriginalPosition(Collider other)
-    {
-        float elapsedTime = 0;
-        Vector3 startingPosition = other.transform.position;
-
-        while (elapsedTime < 1.0f)
-        {
-            other.transform.position = Vector3.Lerp(startingPosition, originalPosition, elapsedTime);
-            elapsedTime += Time.deltaTime * returnSpeed;
-            yield return null;
         }
     }
 }

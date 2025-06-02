@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
         PotionData randomPotion = allPotions[Random.Range(0, allPotions.Length)];
 
         Instance.CurrentOrder = randomPotion;
-        OnCreateOrderText?.Invoke($"Заказ:\n{randomPotion.potionName}");
+        OnCreateOrderText?.Invoke($"{randomPotion.potionName}");
         if (Cauldron != null)
         {
             var cauldron = Cauldron.GetComponent<Cauldron>();
